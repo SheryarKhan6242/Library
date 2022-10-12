@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Login;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -14,7 +15,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //
+        return view('login.verify');
     }
 
     public function verify_data(Request $request)
@@ -27,11 +28,15 @@ class LoginController extends Controller
 
         if ($users) {
             if ($users->role == "Reader") {
-                return view('home.reader_dashboard');
 
+                $books = Book::where('status', "Available")->get();
+                $data['books'] = $books;
+
+                return view('reader.viewbook', $data);
             } else {
-                return view('home.staff_dashboard');
 
+                
+                return view('home.staff_dashboard');
             }
 
         }

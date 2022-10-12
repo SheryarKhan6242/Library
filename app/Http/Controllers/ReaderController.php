@@ -24,9 +24,6 @@ class ReaderController extends Controller
         // dd($user);
 
 // Get the currently authenticated user's ID...
-        $id = Auth::id();
-
-        dd($id);
 
         $books = Book::where('status', "Available")->get();
 

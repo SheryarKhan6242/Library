@@ -1,4 +1,4 @@
-<form action="{{ route('home.save') }}" method="POST">
+<form action="{{ route('publish.book') }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <h1>Add Book </h1>

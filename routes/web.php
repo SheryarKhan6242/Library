@@ -25,13 +25,16 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [RegisterController::class, 'index'])->name('register.index');
-Route::post('/submit', [RegisterController::class, 'insert_data'])->name('register.save');
-Route::post('/submitt', [LoginController::class, 'verify_data'])->name('login.check');
-Route::post('/submittt', [BookController::class, 'publish_book'])->name('home.save');
-
+Route::get('/', [RegisterController::class, 'index'])->name('view.register');
+Route::get('/login', [LoginController::class, 'index'])->name('view.login');
 Route::get('/viewBook', [ReaderController::class, 'viewBook'])->name('reader.viewbook');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::post('/register-submit', [RegisterController::class, 'insert_data'])->name('register.save');
+
+Route::post('/login', [LoginController::class, 'verify_data'])->name('verify.login');
+Route::post('/book-submit', [BookController::class, 'publish_book'])->name('publish.book');
 
 // Route::get('login', array(
 //     'uses' => 'MainController@showLogin',
