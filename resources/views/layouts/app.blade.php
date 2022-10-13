@@ -76,5 +76,24 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- JS Scripts -->
+<script src="{{ asset('assets-frontend/js/jQuery/jquery-3.5.1.min.js') }}"></script>
+
+<script src="{{ asset('assets-frontend/js/libs/jquery.mousewheel.min.js') }}"></script>
+<script src="{{ asset('assets-frontend/js/libs/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets-frontend/js/libs/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets-frontend/js/libs/material.min.js') }}"></script>
+
+<script src="{{ asset('assets-frontend/js/main.js') }}"></script>
+<script src="{{ asset('assets-frontend/js/libs-init/libs-init.js') }}"></script>
+
+<script src="{{ asset('assets-frontend/Bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- SVG icons loader -->
+<script src="{{ asset('assets-frontend/js/svg-loader.js') }}"></script>
+<!-- /SVG icons loader -->
+<!-- DataTables -->
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 </body>
 </html>

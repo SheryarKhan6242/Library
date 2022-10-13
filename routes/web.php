@@ -14,6 +14,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AjaxController;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,11 @@ Route::post('/register-submit', [RegisterController::class, 'insert_data'])->nam
 
 Route::post('/login', [LoginController::class, 'verify_data'])->name('verify.login');
 Route::post('/book-submit', [BookController::class, 'publish_book'])->name('publish.book');
+
+
+// Route::get('ajaxRequest', [AjaxController::class, 'ajaxRequest']);
+Route::post('/ajaxRequest', [AjaxController::class, 'ajaxRequestPost'])->name('ajaxRequest.post');
+
 
 // Route::get('login', array(
 //     'uses' => 'MainController@showLogin',

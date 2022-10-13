@@ -1,0 +1,10 @@
+.logo-bg{ background:#2d89d7; border-radius:100%}
+.logo-colored { background:#2d89d7;}
+.content-bg-wrap.bg-landing:before, .landing-page .content-bg-wrap:before { background-color:rgba(45,137,215,.95)}
+.registration-login-form { padding-left:0px; padding-top: 60px;}
+.form-error { padding:20px}
+.post-control-button { display:none}
+.header .page-title { padding-top:30px;}
+.w-socials .social-item i, .social-item svg { float:left}
+.w-socials .social-item { padding:15px 15px}
+.btn-icon-left svg{ float:left}
