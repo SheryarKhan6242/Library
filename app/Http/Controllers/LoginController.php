@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Login;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -43,6 +44,11 @@ class LoginController extends Controller
 
                 return view('home.staff_dashboard');
             }
+
+        } else {
+            throw ValidationException::withMessages([
+                $request->id => [trans('auth.failed')],
+            ]);
 
         }
 

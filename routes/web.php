@@ -13,8 +13,10 @@
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\RegisterController;
+use App\Models\Login;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +30,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RegisterController::class, 'index'])->name('view.register');
 Route::get('/login', [LoginController::class, 'index'])->name('view.login');
+
+Route::get('/logout', [LogoutController::class, 'logout'])->name('session.logout');
+
 Route::get('/viewBook', [ReaderController::class, 'viewBook'])->name('reader.viewbook');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/register-submit', [RegisterController::class, 'insert_data'])->name('register.save');
@@ -50,11 +56,11 @@ Route::post('/ajaxRequest', [AjaxController::class, 'ajaxRequestPost'])->name('a
 //     'uses' => 'MainController@doLogout',
 // ));
 
-// Route::get('/logout', function () {
+// Route::view('session.logout', function () {
 //     if (session()->has('key')) {
 //         session()->pull('key');
 //     }
-//     return view('login.verify');
+//     return redirect('login.verify');
 // });
 
 // Route::get('/login', function () {
