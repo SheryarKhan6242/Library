@@ -10,11 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\AjaxController;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 
@@ -31,16 +31,13 @@ Route::get('/login', [LoginController::class, 'index'])->name('view.login');
 Route::get('/viewBook', [ReaderController::class, 'viewBook'])->name('reader.viewbook');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 Route::post('/register-submit', [RegisterController::class, 'insert_data'])->name('register.save');
 
 Route::post('/login', [LoginController::class, 'verify_data'])->name('verify.login');
 Route::post('/book-submit', [BookController::class, 'publish_book'])->name('publish.book');
 
-
 // Route::get('ajaxRequest', [AjaxController::class, 'ajaxRequest']);
 Route::post('/ajaxRequest', [AjaxController::class, 'ajaxRequestPost'])->name('ajaxRequest.post');
-
 
 // Route::get('login', array(
 //     'uses' => 'MainController@showLogin',
@@ -52,3 +49,17 @@ Route::post('/ajaxRequest', [AjaxController::class, 'ajaxRequestPost'])->name('a
 // Route::get('logout', array(
 //     'uses' => 'MainController@doLogout',
 // ));
+
+// Route::get('/logout', function () {
+//     if (session()->has('key')) {
+//         session()->pull('key');
+//     }
+//     return view('login.verify');
+// });
+
+// Route::get('/login', function () {
+//     if (session()->has('key')) {
+//         return view('reader')
+//     }
+//     return view('login.verify');
+// });

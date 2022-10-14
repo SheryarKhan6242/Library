@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
+
 </html>
 
 
@@ -30,12 +33,14 @@
             <td> {{ $book->price }} </td>
             <td> {{ $book->catogory }} </td>
             <td> {{ $book->edition }} </td>
-            <td> <a href="#" onclick="getBookId(123)"> {{ $book->status }} </a>
+            <td> <a href="#" onclick="getBookId( {{ $book->book_id }} )"> {{ $book->status }}
+                </a>
             </td>
 
         </tr>
     @endforeach
 
+    {{-- <a href="/logout">Logout</a> --}}
 
 </table>
 
@@ -63,23 +68,23 @@
 <!-- DataTables -->
 
 <script>
-function getBookId(id) {
-    console.log("in book")
-    
-      $.ajax({
+    function getBookId(bookID) {
+        console.log("in the book")
+
+        $.ajax({
             url: "{{ route('ajaxRequest.post') }}",
             method: 'post',
             data: {
                 "_token": "{{ csrf_token() }}",
-                name: "shery",
-                id: id
-        },
-            success: function (data) {
-                    var test = JSON.stringify(data);
-                    alert(test);
-			      }
+                //name: "shery",
+                //userid: userID,
+                bookid: bookID
+            },
+            success: function(dat) {
+                var test = JSON.stringify(dat);
+                alert(test);
+            }
 
-      });
-}
-       
+        });
+    }
 </script>

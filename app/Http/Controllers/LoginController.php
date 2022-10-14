@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Login;
 use App\Models\Book;
+use App\Models\Login;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -27,6 +27,12 @@ class LoginController extends Controller
         ])->first();
 
         if ($users) {
+
+            $userq = $users->id;
+            $request->session()->put('key', $userq);
+            //dd(key());
+            //echo session('key');
+
             if ($users->role == "Reader") {
 
                 $books = Book::where('status', "Available")->get();
@@ -35,7 +41,6 @@ class LoginController extends Controller
                 return view('reader.viewbook', $data);
             } else {
 
-                
                 return view('home.staff_dashboard');
             }
 
