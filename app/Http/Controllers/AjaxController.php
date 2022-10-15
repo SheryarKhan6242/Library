@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reserve;
 use Carbon\Carbon;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class AjaxController extends Controller
@@ -21,27 +22,21 @@ class AjaxController extends Controller
     public function ajaxRequestPost(Request $request)
     {
         $data = $request->all();
-        //$gettingbookid = $request->bookid;
-        //$gettinguserid = $request->userid;
-
-        $model = new reserve();
-        $model->issue_date = date("Y-m-d");
-        $model->return_date = Carbon::now()->addDays(30)->format('Y-m-d');
-        $model->book_id = $request->bookid;
-        $model->user_id = session('key');
-        $model->save();
-
-        // $model1 = Book::find($gettingbookid);
-        // $model1->update(['status', "Reserved"]);
-        // $model1->save();
-
-        // $model1 = new Book();
-        // Book::where('book_id', $gettingbookid)->update(array('status' => 'Reserved'));
-        // $model1->save();
-
-        // dd($data['name'], ['id']);
-        return response()->json(['book ID' => $request->book_id, 'user ID' => session('key')]); //yeh json(k ander ka hai) ['book ID' => $gettingbookid, 'user ID' => $gettinguserid]
-
+        if($data)
+        {
+            $model = new reserve();
+            $model->issue_date = date("Y-m-d");
+            $model->return_date = Carbon::now()->addDays(30)->format('Y-m-d');
+            $model->book_id = $request->book_id;
+            $model->user_id = session('key');
+            $model->save();
+            // $model1 = new Book();
+            // Book::where('book_id', $request->book_id)->update(array('status' => 'Reserved'));
+            // $model1->save();
+            Book::where('book_id', $request->book_id)->update(array('status' => 'Reserved'));
+            return response()->json(['success' => true]);
+            // return response()->json(['book_id' => $request->book_id, 'user_id' => session('key')]); //yeh json(k ander ka hai) ['book ID' => $gettingbookid, 'user ID' => $gettinguserid]
+        }
     }
 
     /**

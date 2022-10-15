@@ -53,22 +53,23 @@
 
 <script>
     function getBookId(bookID) {
-        console.log("in the book")
-
         $.ajax({
             url: "{{ route('ajaxRequest.post') }}",
             method: 'post',
             data: {
                 "_token": "{{ csrf_token() }}",
-                //name: "shery",
-                //userid: userID,
-                bookid: bookID
+                book_id: bookID
             },
-            success: function(dat) {
-                var test = JSON.stringify(dat);
-                alert(test);
+            success: function(response) {
+                if(response.success)
+                {
+                    alert("Successfully Booked!")
+                }
+                else
+                {
+                    alert("Error!: Couldn't book")
+                }
             }
-
         });
     }
 </script>
