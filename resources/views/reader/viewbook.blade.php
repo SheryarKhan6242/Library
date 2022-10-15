@@ -1,42 +1,56 @@
 @extends('layouts.template')
-
-<table>
-    <tr>
-        <th>Book ID</th>
-        <th>Book Title</th>
-        <th>Book price</th>
-        <th>Book Category</th>
-        <th>Book Edition</th>
-        <th>Status</th>
-    </tr>
-
-    @foreach ($books as $book)
+<div class="container">
+    <h3 style="text-align:center"> Your Bookings</h3>
+    <table>
         <tr>
-            <td> {{ $book->book_id }} </td>
-            <td> {{ $book->title }} </td>
-            <td> {{ $book->price }} </td>
-            <td> {{ $book->catogory }} </td>
-            <td> {{ $book->edition }} </td>
-            <td> <a href="#" onclick="getBookId( {{ $book->book_id }} )"> {{ $book->status }}
-                </a>
-            </td>
-
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Book price</th>
+            <th>Book Category</th>
+            <th>Book Edition</th>
+            <th>Status</th>
         </tr>
-    @endforeach
 
-    {{-- <a href="/logout">Logout</a> --}}
+        @foreach ($books as $book)
+            <tr>
+                <td> {{ $book->book_id }} </td>
+                <td> {{ $book->title }} </td>
+                <td> {{ $book->price }} </td>
+                <td> {{ $book->catogory }} </td>
+                <td> {{ $book->edition }} </td>
+                <td> <a href="#" id={{ $book->book_id }} onclick="getBookId( {{ $book->book_id }} )"> {{ $book->status }}
+                    </a>
+                </td>
 
-</table>
-
-
-
+            </tr>
+        @endforeach
+    </table>
+</div>
 <style>
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
+
+table {
+    margin: 37px 197px;
+    border-spacing: 0 15px !important;
+    border-collapse: separate !important;
+}
+tr
+{
+    border-spacing: 12px;
+    border-collapse: none;
+}
+th {
+    color: white;
+}
+
+th, td {
+    width: 200px;
+}
+
+h2 {
+  color: #4287f5;
+}
+
+
 </style>
 
 
@@ -53,6 +67,11 @@
 
 <script>
     function getBookId(bookID) {
+        $("#"+bookID).text('Reserved');
+        $("#"+bookID)
+        .css('cursor', 'default')
+        .css('text-decoration', 'none');
+
         $.ajax({
             url: "{{ route('ajaxRequest.post') }}",
             method: 'post',
