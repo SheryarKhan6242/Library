@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Reserve;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ReaderController extends Controller
 {
@@ -23,12 +25,42 @@ class ReaderController extends Controller
         // $user = Auth::user();
         // dd($user);
 
-// Get the currently authenticated user's ID...
+        // Get the currently authenticated user's ID...
 
         $books = Book::where('status', "Available")->get();
 
         $data['books'] = $books;
         return view('reader.viewbook', $data);
+    }
+
+    public function mybookings()
+    {
+        $users = Reserve::join('books', 'reserves.book_id', '=', 'books.book_id')
+            ->where('reserves.user_id', session('key'))
+            ->get(['reserves.issue_date', 'reserves.return_date', 'books.title', 'books.catogory', 'edition' , 'books.book_id']);
+
+        $data['bookings'] = $users;
+
+        // return response()->json(['success' => true]);
+        return view('reader.viewbooking', $data);
+    }
+
+    public function popup()
+    {
+        $model = Reserve::where('user_id', session('key'))->first();
+
+        $dateofreturn = $model->return_date;
+
+        $datetime1 = new DateTime(Carbon::now()->format('Y-m-d'));
+        $datetime2 = new DateTime($dateofreturn);
+
+        $interval = $datetime1->diff($datetime2);
+        $days = $interval->format('%a');
+
+        if ($days > 0 && $days < 3) {
+            return response()->json(['success' => true]);
+        }
+
     }
 
     /**

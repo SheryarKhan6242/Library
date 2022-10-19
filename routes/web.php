@@ -16,7 +16,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\RegisterController;
-use App\Models\Login;
+use App\Models\Reader;
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +44,16 @@ Route::post('/book-submit', [BookController::class, 'publish_book'])->name('publ
 
 // Route::get('ajaxRequest', [AjaxController::class, 'ajaxRequest']);
 Route::post('/ajaxRequest', [AjaxController::class, 'ajaxRequestPost'])->name('ajaxRequest.post');
+
+Route::post('/book-return', [BookController::class, 'return_book'])->name('book.return');
+
+Route::post('/book-extend', [BookController::class, 'extend_date'])->name('book.extend');
+
+Route::get('/view-bookings', [ReaderController::class, 'mybookings'])->name('view.mybookings');
+
+Route::get('/popup', [ReaderController::class, 'popup'])->name('return.popup');
+
+// Route::post('/View-profile', [ViewReservedBookController::class, 'index'])->name('view.reservedbook');
 
 // Route::get('login', array(
 //     'uses' => 'MainController@showLogin',

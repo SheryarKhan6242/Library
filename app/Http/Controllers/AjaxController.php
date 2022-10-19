@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Reserve;
 use Carbon\Carbon;
-use App\Models\Book;
 use Illuminate\Http\Request;
 
 class AjaxController extends Controller
@@ -22,20 +22,29 @@ class AjaxController extends Controller
     public function ajaxRequestPost(Request $request)
     {
         $data = $request->all();
-        if($data)
-        {
-            $model = new reserve();
-            $model->issue_date = date("Y-m-d");
-            $model->return_date = Carbon::now()->addDays(30)->format('Y-m-d');
-            $model->book_id = $request->book_id;
-            $model->user_id = session('key');
-            $model->save();
-            // $model1 = new Book();
-            // Book::where('book_id', $request->book_id)->update(array('status' => 'Reserved'));
-            // $model1->save();
-            Book::where('book_id', $request->book_id)->update(array('status' => 'Reserved'));
-            return response()->json(['success' => true]);
-            // return response()->json(['book_id' => $request->book_id, 'user_id' => session('key')]); //yeh json(k ander ka hai) ['book ID' => $gettingbookid, 'user ID' => $gettinguserid]
+
+        if ($data) {
+
+            $count = Reserve::where('user_id', '=', session('key'))->count();
+
+            if ($count < 2) {
+
+                $model = new reserve();
+                $model->issue_date = date("Y-m-d");
+                $model->return_date = Carbon::now()->addDays(30)->format('Y-m-d');
+                $model->book_id = $request->book_id;
+                $model->user_id = session('key');
+                $model->save();
+
+                // Book::where('book_id', $request->book_id)->update(array('status' => 'Reserved'));
+
+                Book::where('book_id', $request->book_id)->update(array('status' => 'Reserved'));
+                return response()->json(['success' => true]);
+                // return response()->json(['book_id' => $request->book_id, 'user_id' => session('key')]); //yeh json(k ander ka hai) ['book ID' => $gettingbookid, 'user ID' => $gettinguserid]
+
+            } else {
+                return response()->json(['failed' => true]);
+            }
         }
     }
 

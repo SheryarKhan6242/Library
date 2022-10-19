@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Reserve;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -26,6 +29,44 @@ class BookController extends Controller
         $model->edition = $request->book_edition;
         $model->status = "Available";
         $model->save();
+
+    }
+
+    public function return_book(Request $request)
+    {
+        $model1 = Reserve::where('book_id', $request->book_id)->first();
+        DB::table('reserves')->where('res_id', $model1->res_id)->delete();
+        Book::where('book_id', $request->book_id)->update(array('status' => 'Available'));
+        return response()->json(['success' => true]);
+
+    }
+
+    public function extend_date(Request $request)
+    {
+        $model1 = Reserve::where('book_id', $request->book_id)->first();
+        $datetime = $model1->return_date;
+
+        // $date = Carbon::createFromFormat('Y-m-d', $datetime)->format('Y-m-d');
+        // date("Y-m-d");
+        // $d = new date($datetime);
+        // dd($date);
+        // $formatted_date = $d->format('Y-m-d');
+
+        // $time = new DateTime(strtotime($datetime));
+        // dd($formatted_date);
+
+        // $dda = $datetime;
+        // $ddaa = Carbon::parse()->$datetime;
+        // $dda = Carbon::now($datetime)->addDays(10)->format('Y-m-d');
+        // dd($ddaa);
+        // $datetime = new DateTime($model1->return_date);
+        // $datetime = date('d-m-Y', strtotime($model1->return_date));
+
+        // // $datetime = Carbon::createFromFormat('d/m/Y', $request->$model1->return_date)->format('Y-m-d');
+        // dd($datetime);
+
+        Reserve::where('res_id', $model1->res_id)->update(array('return_date' => $datetime->addDays(5)));
+        return response()->json(['success' => true]);
 
     }
 
