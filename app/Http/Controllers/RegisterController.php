@@ -22,44 +22,38 @@ class RegisterController extends Controller
 
     public function insert_data(Request $request)
     {
+        $exist = Login::where('email', $request->email)->get();
+        // dd($exist->all());
+        if ($exist->all() != "") {
 
-        // dd("helo000000");
+            $model = new Login();
+            $model->email = $request->email;
+            $model->user_name = $request->username;
+            $model->password = $request->password;
+            $model->role = $request->role;
+            $model->save();
 
-        $model = new Login();
-        $model->email = $request->email;
-        $model->user_name = $request->username;
-        $model->password = $request->password;
-        $model->role = $request->role;
-        $model->save();
+            //concatenation of first name and last name
+            $staff1 = $request->f_name . " " . $request->l_name;
 
-        // $model = new Staff();
+            $role_check = $request->role;
+            if ($role_check == "Reader") {
+                $model1 = new Reader();
+                $model1->email = $request->email;
+                $model1->first_name = $request->f_name;
+                $model1->last_name = $request->l_name;
+                $model1->phone_no = $request->phone_no;
+                $model1->address = $request->address;
+                $model1->save();
+            }
+            if ($role_check == "Staff") {
+                $model2 = new staffs();
+                $model2->staff_name = $staff1;
+                $model2->save();
+            }
 
-        $staff1 = $request->f_name . " " . $request->l_name;
-
-        // $for_staff2 = $_POST["l_name"];
-        // $for_staff
-        // dd($for_staff1);
-
-        $role_check = $request->role;
-        // dd($role_check);
-        if ($role_check == "Reader") {
-            $model1 = new Reader();
-            $model1->email = $request->email;
-            $model1->first_name = $request->f_name;
-            $model1->last_name = $request->l_name;
-            $model1->phone_no = $request->phone_no;
-            $model1->address = $request->address;
-            $model1->save();
+            return view("login.verify");
         }
-        if ($role_check == "Staff") {
-            $model2 = new staffs();
-            $model2->staff_name = $staff1;
-            $model2->save();
-        }
-
-        return view("login.verify");
-        // dd($request->username);
-        // return view('register.validation');
     }
 
     // public function login()
